@@ -13,16 +13,28 @@ vector<double> input_numbers(size_t count){
     return result;
 }
 
+void find_minmax(vector<double> numbers, double &min, double &max){
+    for (double number : numbers)                                   // для каждого элемента из numbers запишем значение в number
+    {
+        if (min > number)                                           // Вычисление минимума из массива
+        {
+            min = number;
+        }
+        if (max < number)                                           // Вычисление максимума из массива
+        {
+            max = number;
+        }
+    }
+}
 
 int main()
 {
     // Ввод данных
     size_t number_count;
     cerr << "Enter number count: ";
-    cin >> number_count;                                             // Количество чисел в массиве
-
-    vector<double> numbers(number_count);                            // исходный массив
-    numbers = input_numbers(number_count);
+    cin >> number_count;
+                                                // Количество чисел в массиве
+    const vector<double> numbers = input_numbers(number_count);
 
     size_t bin_count;                                               // Количество "корзин"
     cerr << "Enter bin count: ";
@@ -36,17 +48,7 @@ int main()
     double max = numbers[0];
 // Начальное значение для максимума и минимума
 
-    for (double number : numbers)                                   // для каждого элемента из numbers запишем значение в number
-    {
-        if (min > number)                                           // Вычисление минимума из массива
-        {
-            min = number;
-        }
-        if (max < number)                                           // Вычисление максимума из массива
-        {
-            max = number;
-        }
-    }
+    find_minmax(numbers, min, max);
 
     double bin_size = (max - min) / bin_count;
 // Размер одной корзины
