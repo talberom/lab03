@@ -13,7 +13,7 @@ vector<double> input_numbers(size_t count){
     return result;
 }
 
-void find_minmax(vector<double> numbers, double &min, double &max){
+void find_minmax(const vector<double> &numbers, double &min, double &max){
     for (double number : numbers)                                   // для каждого элемента из numbers запишем значение в number
     {
         if (min > number)                                           // Вычисление минимума из массива
@@ -25,6 +25,27 @@ void find_minmax(vector<double> numbers, double &min, double &max){
             max = number;
         }
     }
+}
+
+
+double make_histogram(const vector<double> &numbers, size_t bin_count, double &min, double &max){
+    find_minmax(numbers, min, max);
+    double bin_size = (max - min) / bin_count;
+    return bin_size;
+}
+
+void show_histogram_text(size_t &bin, double &height){
+    if (bin < 100){
+        cout << " ";
+    }
+    if (bin < 10){
+        cout << " ";
+    }
+    cout << bin << "|";
+    for (size_t zv = 0; zv < height; zv++){                        // Вывод звёздочек в соответствии с количеством чисел
+        cout << "*";
+    }
+    cout << endl;
 }
 
 int main()
@@ -42,15 +63,13 @@ int main()
 
 
     // Расчёт гистограммы
-    vector<size_t> bins(bin_count, 0);                              // В каждую ячейку из массива корзин записать значение 0
-
+    vector<size_t> bins(bin_count, 0);
+                                  // В каждую ячейку из массива корзин записать значение 0
     double min = numbers[0];
     double max = numbers[0];
-// Начальное значение для максимума и минимума
 
-    find_minmax(numbers, min, max);
+    double bin_size = make_histogram(numbers, bin_count, min, max);
 
-    double bin_size = (max - min) / bin_count;
 // Размер одной корзины
     for (size_t i = 0; i < number_count; i++)
     {
@@ -97,21 +116,7 @@ int main()
             height = MAX_ASTERISK * (static_cast<double>(bin) / max_bins); // рассматривать выражение bin как имеющее тип double.
         }
 
-// 2 "if-a" - табуляция для корректного вывода
-        if (bin < 100)
-        {
-            cout << " ";
-        }
-        if (bin < 10)
-        {
-            cout << " ";
-        }
-        cout << bin << "|";
-        for (size_t zv = 0; zv < height; zv++)                        // Вывод звёздочек в соответствии с количеством чисел
-        {
-            cout << "*";
-        }
-        cout << endl;
+        show_histogram_text(bin, height);
     }
     return 0;
 }
