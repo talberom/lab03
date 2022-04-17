@@ -98,9 +98,19 @@ void svg_rect(double x, double y, double width, double height, string color){
 }
 
 void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
-    svg_begin(400, 300);
+    const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_HEIGHT = 300;
+    const auto TEXT_LEFT = 20;
+    const auto TEXT_BASELINE = 20;
+    const auto TEXT_WIDTH = 50;
+    const auto BIN_HEIGHT = 30;
+    const auto BLOCK_WIDTH = 10;
+    const auto INDENT = 3;
+
+    svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    // svg_text(TEXT_LEFT, TEXT_BASELINE, to_string(bins[0]));
     for (int i = 0; i < bin_count; i++){
-        svg_rect(0, i * 12, bins[i] * 10, 10, "gray");
+        svg_rect(0, i * (BIN_HEIGHT + INDENT), bins[i] * BLOCK_WIDTH, BIN_HEIGHT, "gray");
     }
     svg_end();
 }
