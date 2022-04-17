@@ -30,8 +30,8 @@ void svg_end() {
     cout << "</svg>\n";
 }
 
-void svg_text(double left, double baseline, string text){
-    cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>";
+void svg_text(double left, double baseline, string text, string decorate = "none"){
+    cout << "<text x='" << left << "' y='" << baseline << "' text-decoration='" << decorate << "'>" << text << "</text>";
 }
 
 void svg_rect(double x, double y, double width, double height, string stroke = "black", string color = "black"){
@@ -46,10 +46,11 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
     const auto TEXT_WIDTH = 50;
     const auto BIN_HEIGHT = 30;
     const auto BLOCK_WIDTH = 10;
-    const auto INDENT = 3;
 
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
+    string decorate;
+    cout << "Input style of text: "; cin >> decorate;
     for (size_t bin : bins) {
         double bin_width;
         if (bin <= IMAGE_WIDTH) {
@@ -58,7 +59,7 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
         else {
             bin_width = bin;
         }
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin), decorate);
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "mediumturquoise");
         top += BIN_HEIGHT;
     }
