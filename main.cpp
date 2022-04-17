@@ -28,7 +28,9 @@ void find_minmax(const vector<double> &numbers, double &min, double &max){
 }
 
 
-double make_histogram(const vector<double> &numbers, size_t bin_count, double &min, double &max){
+double make_histogram(const vector<double> &numbers, size_t bin_count){
+    double min = numbers[0];
+    double max = numbers[0];
     find_minmax(numbers, min, max);
     double bin_size = (max - min) / bin_count;
     return bin_size;
@@ -74,6 +76,36 @@ void show_histogram_text(const vector<size_t>& bins){
     }
 }
 
+void svg_begin(double width, double height) {
+    cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
+    cout << "<svg ";
+    cout << "width='" << width << "' ";
+    cout << "height='" << height << "' ";
+    cout << "viewBox='0 0 " << width << " " << height << "' ";
+    cout << "xmlns='http://www.w3.org/2000/svg'>\n";
+}
+
+void svg_end() {
+    cout << "</svg>\n";
+}
+
+void svg_text(double left, double baseline, string text){
+    cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>";
+}
+
+void svg_rect(double x, double y, double width, double height, string color){
+    cout << "<rect x='" << x << "' y='" << y << "' width='" << width <<"' height='" << height << "' fill='" << color << "' />";
+}
+
+void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
+    svg_begin(400, 300);
+    for (int i = 0; i < bin_count; i++){
+        svg_rect(0, i * 12, bins[i] * 10, 10, "gray");
+    }
+    svg_end();
+}
+
+
 int main()
 {
     // Ввод данных
@@ -94,7 +126,7 @@ int main()
     double min = numbers[0];
     double max = numbers[0];
 
-    double bin_size = make_histogram(numbers, bin_count, min, max);
+    double bin_size = make_histogram(numbers, bin_count);
 
 // Размер одной корзины
     for (size_t i = 0; i < number_count; i++)
@@ -117,8 +149,6 @@ int main()
         }
     }
 
-
-    show_histogram_text(bins);
-
+    show_histogram_svg(bins, bin_count);
     return 0;
 }
