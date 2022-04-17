@@ -108,9 +108,12 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
     const auto INDENT = 3;
 
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
-    // svg_text(TEXT_LEFT, TEXT_BASELINE, to_string(bins[0]));
-    for (int i = 0; i < bin_count; i++){
-        svg_rect(0, i * (BIN_HEIGHT + INDENT), bins[i] * BLOCK_WIDTH, BIN_HEIGHT, "gray");
+    double top = 0;
+    for (size_t bin : bins) {
+        const double bin_width = BLOCK_WIDTH * bin;
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "gray");
+        top += BIN_HEIGHT;
     }
     svg_end();
 }
