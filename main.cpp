@@ -110,7 +110,13 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
     for (size_t bin : bins) {
-        const double bin_width = BLOCK_WIDTH * bin;
+        double bin_width;
+        if (bin <= IMAGE_WIDTH) {
+            bin_width = BLOCK_WIDTH * bin;
+        }
+        else {
+            bin_width = bin;
+        }
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "mediumturquoise");
         top += BIN_HEIGHT;
