@@ -15,8 +15,15 @@ vector<double> input_numbers(size_t count){
 
 
 double make_histogram(const vector<double> &numbers, size_t bin_count){
-    double min = numbers[0];
-    double max = numbers[0];
+    double min; double max;
+    if (numbers.size() > 0){
+        min = numbers[0];
+        max = numbers[0];
+    }
+    else{
+        min = 0;
+        max = 0;
+    }
     find_minmax(numbers, min, max);
     double bin_size = (max - min) / bin_count;
     return bin_size;
