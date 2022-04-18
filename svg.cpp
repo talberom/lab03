@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include "histogram.h"
 #include "svg.h"
 
@@ -15,8 +16,8 @@ void svg_end() {
     cout << "</svg>\n";
 }
 
-void svg_text_hw(double left, double baseline, string text, string decorate = "none"){
-    cout << "<text x='" << left << "' y='" << baseline << "' text-decoration='" << decorate << "'>" << text << "</text>";
+void svg_text_hw(double left, double baseline, string text, ostream &stream, string decorate = "none"){
+    stream << "<text x='" << left << "' y='" << baseline << "' text-decoration='" << decorate << "'>" << text << "</text>";
 }
 
 void svg_text(double left, double baseline, string text){
@@ -41,22 +42,27 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
     string decorate;
     cout << "Input style of text: "; cin >> decorate;
     bool flag = true;
+    double bin_width;
 
     for (size_t bin : bins) {
-        double bin_width;
+        double maxb = -1;
 
-        if (bin > IMAGE_WIDTH){
-            flag = false;
+        for (size_t bin : bins) {
+        if (bin > maxb){
+            maxb = bin;
+            }
         }
 
+        if (maxb > IMAGE_WIDTH / BIN_HEIGHT){
+            flag = false;
+        }
         if (flag) {
             bin_width = BLOCK_WIDTH * bin;
         }
         else {
-            bin_width = bin;
+            bin_width = BLOCK_WIDTH  * bin / (maxb / BLOCK_WIDTH);
         }
-
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin)); // svg_text_hw - добавить decorate - последний аргумент
+        svg_text_hw(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin), cout, decorate); // svg_text_hw - добавить decorate - последний аргумент
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "mediumturquoise");
         top += BIN_HEIGHT;
     }
