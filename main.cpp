@@ -2,6 +2,7 @@
 #include <vector>
 #include <math.h>
 #include "histogram.h"
+#include "svg.h"
 
 using namespace std;
 
