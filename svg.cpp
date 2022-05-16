@@ -48,6 +48,7 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
         double maxb = -1;
 
         for (size_t bin : bins) {
+
         if (bin > maxb){
             maxb = bin;
             }
@@ -56,12 +57,15 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
         if (maxb > IMAGE_WIDTH / BIN_HEIGHT){
             flag = false;
         }
+
+
         if (flag) {
             bin_width = BLOCK_WIDTH * bin;
         }
         else {
             bin_width = BLOCK_WIDTH  * bin / (maxb / BLOCK_WIDTH);
         }
+
         svg_text_hw(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin), cout, decorate); // svg_text_hw - добавить decorate - последний аргумент
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "mediumturquoise");
         top += BIN_HEIGHT;

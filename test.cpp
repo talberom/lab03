@@ -1,8 +1,8 @@
-#include "histogram.h"
-#include "svg.h"
 #include <iostream>
 #include <sstream>
 #include <cassert>
+#include "histogram.h"
+#include "svg.h"
 
 using namespace std;
 
@@ -56,9 +56,9 @@ void test_hw1(){
 
 void test_hw2(){
     stringstream stroka1; string stroka2;
-    svg_text_hw(50, 100, to_string(7), stroka1, "underline");
+    svg_text_hw(150, 250, to_string(7), stroka1, "underline");
     getline(stroka1, stroka2);
-    assert(stroka2 == "<text x='50' y='100' text-decoration='underline'>7</text>");
+    assert(stroka2 == "<text x='150' y='250' text-decoration='underline'>7</text>");
 }
 
 
