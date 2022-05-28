@@ -44,3 +44,15 @@ void test_glass_array(){
     assert(min == 0);
     assert(max == 0);
 }
+/*
+int main(){
+
+    test_positive();
+    test_negative();
+    test_same();
+    test_one_num();
+    test_glass_array();
+
+    return 0;
+}
+*/

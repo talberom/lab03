@@ -23,7 +23,7 @@ void svg_rect(double x, double y, double width, double height, string stroke = "
     cout << "<rect x='" << x << "' y='" << y << "' width='" << width <<"' height='" << height << "' stroke= '" << stroke << "' fill='" << color << "' />";
 }
 
-void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
+void show_histogram_svg(const vector <size_t> &bins){
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
     const auto TEXT_LEFT = 20;
@@ -32,29 +32,25 @@ void show_histogram_svg(const vector <size_t> &bins, size_t bin_count){
     const auto BIN_HEIGHT = 30;
     const auto BLOCK_WIDTH = 10;
 
+    const auto MAX_ASTERISK = (IMAGE_WIDTH - TEXT_WIDTH)/10;
+
+    size_t max_bin = bins[0];
+    for (size_t bin : bins) {
+        if (max_bin < bin) {
+            max_bin = bin;
+        }
+    }
+
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
-    bool flag = true;
-    double bin_width;
     for (size_t bin : bins) {
-        double maxb = -1;
-        for (size_t bin : bins) {
-            if (bin > maxb){
-                maxb = bin;
-                }
-            }
-
-            if (maxb > IMAGE_WIDTH / BIN_HEIGHT){
-                flag = false;
-            }
-            if (flag) {
-                bin_width = BLOCK_WIDTH * bin;
-            }
-            else {
-                bin_width = BLOCK_WIDTH  * bin / (maxb / BLOCK_WIDTH);
-            }
+        double height = bin;
+        if (max_bin > MAX_ASTERISK) {
+            height = MAX_ASTERISK * (static_cast<double>(bin) / max_bin);
+        }
+        const double bin_width = BLOCK_WIDTH * height;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "mediumturquoise");
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", "aqua");
         top += BIN_HEIGHT;
     }
     svg_end();
