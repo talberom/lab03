@@ -32,26 +32,30 @@ void show_histogram_svg(const vector <size_t> &bins){
     const auto BIN_HEIGHT = 30;
     const auto BLOCK_WIDTH = 10;
 
-    const auto MAX_ASTERISK = (IMAGE_WIDTH - TEXT_WIDTH)/10;
-
-    size_t max_bin = bins[0];
-    for (size_t bin : bins) {
-        if (max_bin < bin) {
-            max_bin = bin;
+    size_t max_count = bins[0];
+    for (size_t bin : bins)
+    {
+        if (max_count < bin)
+        {
+            max_count = bin;
         }
     }
 
+
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
-    for (size_t bin : bins) {
-        double height = bin;
-        if (max_bin > MAX_ASTERISK) {
-            height = MAX_ASTERISK * (static_cast<double>(bin) / max_bin);
+    for (size_t i = 0; i < bins.size(); i++) {
+        size_t height = bins[i] * BLOCK_WIDTH;
+        if (max_count * BLOCK_WIDTH > IMAGE_WIDTH - TEXT_WIDTH)
+        {
+            height = (IMAGE_WIDTH - TEXT_WIDTH) * (static_cast<double>(bins[i]) / max_count);
         }
-        const double bin_width = BLOCK_WIDTH * height;
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", "aqua");
+        const double bin_width = height;
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]));
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
         top += BIN_HEIGHT;
     }
     svg_end();
 }
+
+
