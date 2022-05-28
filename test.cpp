@@ -1,5 +1,5 @@
 #include "histogram.h"
-
+#include "test.h"
 #include <cassert>
 
 using namespace std;
@@ -43,13 +43,4 @@ void test_glass_array(){
     find_minmax({}, min, max);
     assert(min == 0);
     assert(max == 0);
-}
-
-int main() {
-    test_positive();
-    test_negative();
-    test_same();
-    test_one_num();
-    test_glass_array();
-    return 0;
 }
