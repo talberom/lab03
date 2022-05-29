@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <string>
 #include <math.h>
 
 #include "histogram.h"
@@ -38,28 +40,34 @@ Input read_input(istream& in, bool prompt){
     return data;
 }
 
+Input download(const string &address){
+    stringstream buffer;
+    CURL* curl = curl_easy_init();
+    if (curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        res = curl_easy_perform(curl);
+        if (res != 0){
+            cerr << curl_easy_strerror(res);
+            exit(1);
+        }
+        curl_easy_cleanup(curl);
+    }
+    return read_input(buffer, false);
+}
+
 int main(int argc, char* argv[])
 {
-    //curl_global_init(CURL_GLOBAL_ALL);
+    Input data;
     if (argc > 1){
-            /*
-        for (int i = 0; i < argc; i++){
-            cout << "argv[" << i << "]: " << argv[i] << endl;
-        }
-        */
-        CURL* curl = curl_easy_init(); // начало работы с curl
-        if (curl) {
-            CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-            res = curl_easy_perform(curl);
-            curl_easy_cleanup(curl);
-        }
-
-        curl_easy_cleanup(curl);       // конец работы с curl
-        return 0;
+        data = download(argv[1]);
     }
-    const auto data = read_input(cin, true);
+    else{
+        data = read_input(cin, true);
+    }
+
     const auto bins = make_histogram(data);
     show_histogram_svg(bins);
+
     return 0;
 }
