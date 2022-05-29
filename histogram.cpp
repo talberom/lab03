@@ -6,15 +6,18 @@
 using namespace std;
 
 void find_minmax(const vector<double> &numbers, double &min, double &max){
-    for (double number : numbers)                                   // дл€ каждого элемента из numbers запишем значение в number
-    {
-        if (min > number)                                           // ¬ычисление минимума из массива
-        {
-            min = number;
+    if (numbers.size() == 0) {
+        return;
+    }
+    min = numbers[0];
+    max = numbers[0];
+    for (auto num : numbers){
+        if (num < min){
+            min = num;
         }
-        if (max < number)                                           // ¬ычисление максимума из массива
+        if (num > max)
         {
-            max = number;
+            max = num;
         }
     }
 }
