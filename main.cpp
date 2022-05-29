@@ -124,14 +124,16 @@ Input download(const string &address){
      CURL* curl = curl_easy_init();
     if (curl) {
         CURLcode res;
-        //double namelookup;
+        double namelookup;
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         res = curl_easy_perform(curl);
-        if (res != 0){
-            cerr << curl_easy_strerror(res);
-            exit(1);
+        if(CURLE_OK == res) {
+            res = curl_easy_getinfo(curl, CURLINFO_NAMELOOKUP_TIME, &namelookup);
+            if(CURLE_OK == res) {
+                printf("Time: %.1f", namelookup);
+            }
         }
         curl_easy_cleanup(curl);
     }
