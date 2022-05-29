@@ -1,9 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+
 #include "histogram.h"
 #include "svg.h"
-#include "test.h"
+
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -38,6 +40,7 @@ Input read_input(istream& in, bool prompt){
 
 int main()
 {
+    curl_global_init(CURL_GLOBAL_ALL);
     const auto data = read_input(cin, true);
     const auto bins = make_histogram(data);
     show_histogram_svg(bins);
