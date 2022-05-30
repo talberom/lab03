@@ -72,24 +72,15 @@ void show_histogram_text(const vector<size_t>& bins){
 
 int main()
 {
-
     size_t number_count;
-    cerr << "Enter number count: ";
+    cerr << "enter number count: ";
     cin >> number_count;
-
-    cerr << "Enter numbers: ";
     const auto numbers = input_numbers(number_count);
-
     size_t bin_count;
-    cerr << "Enter column count: ";
+    cerr << "enter bin count: ";
     cin >> bin_count;
-
-    int bin_height;
-    cerr << "Enter column height: ";
-    cin >> bin_height;
-
     const auto bins = make_histogram(numbers, bin_count);
-    show_histogram_svg(bins, bin_height);
+    show_histogram_svg(bins, bin_count);
 
     return 0;
 }
