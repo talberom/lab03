@@ -72,6 +72,13 @@ void show_histogram_text(const vector<size_t>& bins){
 
 int main()
 {
+    const char* name = "Vladimir";
+    const char* surname = "Ilyich Lenin";
+    int year = 1870;
+    double balance = 343.773;
+    printf("%s %s was born in %d.\nHe have %.2f $ on his card now.\n", name, surname, year, balance);
+    //printf("%08x\n", 0x1234567);
+    return 0;
 
     size_t number_count;
     cerr << "Enter number count: ";
