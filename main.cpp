@@ -2,6 +2,8 @@
 #include <vector>
 #include <math.h>
 #include <windows.h>
+#include <tchar.h>
+#define vWIN_BUFFER 32767
 
 #include "histogram.h"
 #include "svg.h"
@@ -94,6 +96,13 @@ int main()
 
     printf("Windows v%u.%u (build %u)\n", version_major, version_minor, build);
 
+    TCHAR infoBuf[vWIN_BUFFER];
+    DWORD bufCharCount = vWIN_BUFFER;
+
+    if (!GetComputerName(infoBuf, &bufCharCount)){
+        printf("GetComputername");
+    }
+    printf("\nComputer name: %s\n", infoBuf);
 
     return 0;
     size_t number_count;

@@ -5,11 +5,12 @@
 1653912465 c:\users\user\desktop\labs\3\project\histogram.h
 	<vector>
 
-1653919015 source:c:\users\user\desktop\labs\3\project\main.cpp
+1653919831 source:c:\users\user\desktop\labs\3\project\main.cpp
 	<iostream>
 	<vector>
 	<math.h>
 	<windows.h>
+	<tchar.h>
 	"histogram.h"
 	"svg.h"
 
