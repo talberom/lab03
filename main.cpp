@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <windows.h>
+
 #include "histogram.h"
 #include "svg.h"
-
 using namespace std;
 
 vector<double> input_numbers(size_t count){
@@ -72,6 +73,18 @@ void show_histogram_text(const vector<size_t>& bins){
 
 int main()
 {
+    DWORD vWIN = GetVersion();
+
+    printf("Windows version: %u\n", vWIN);
+    printf("Windows version: %08x\n", vWIN);
+
+    DWORD mask = 0b00000000'00000000'11111111'11111111;
+    DWORD version = vWIN & mask;
+
+
+    printf("Version: %08x\n", version);
+
+    return 0;
     size_t number_count;
     cerr << "enter number count: ";
     cin >> number_count;
@@ -81,6 +94,4 @@ int main()
     cin >> bin_count;
     const auto bins = make_histogram(numbers, bin_count);
     show_histogram_svg(bins, bin_count);
-
-    return 0;
 }
