@@ -36,6 +36,11 @@ Input read_input(istream& in, bool prompt){
     }
     size_t bin_count;
     in >> data.bin_count;
+    if (prompt){
+        cerr << "Enter style of text: ";
+    }
+    string decoration;
+    in >> data.decoration;
 
     return data;
 }
@@ -132,13 +137,15 @@ Input download(const string &address){
         if(CURLE_OK == res) {
             res = curl_easy_getinfo(curl, CURLINFO_NAMELOOKUP_TIME, &namelookup);
             if(CURLE_OK == res) {
-                printf("Time: %.1f", namelookup);
+                cerr << "Time: " << namelookup << endl;
             }
         }
         curl_easy_cleanup(curl);
     }
     return read_input(buffer, true);
 }
+
+
 
 
 int main(int argc, char* argv[])
@@ -152,7 +159,7 @@ int main(int argc, char* argv[])
     }
 
     const auto bins = make_histogram(data);
-    show_histogram_svg(bins);
+    show_histogram_svg(bins, data);
 
     return 0;
 }

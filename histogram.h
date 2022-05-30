@@ -9,7 +9,9 @@ using namespace std;
 struct Input{
     vector<double> numbers;
     size_t bin_count;
-    size_t number_count; // можно в коммент
+    size_t number_count;
+    string decoration;
+    // можно в коммент
 };
 
 void find_minmax(const vector<double> &numbers, double &min, double &max);
