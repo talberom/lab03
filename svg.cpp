@@ -1,8 +1,21 @@
-#include <iostream>
-#include <vector>
+#include <windows.h>
+#include <tchar.h>
 #include "svg.h"
 
 using namespace std;
+
+const auto vWIN_BUFFER = 32767;
+
+const auto IMAGE_WIDTH = 400;
+const auto IMAGE_HEIGHT = 300;
+const auto TEXT_LEFT = 20;
+const auto TEXT_BASELINE = 20;
+const auto TEXT_WIDTH = 50;
+const auto BIN_HEIGHT = 30;
+const auto BLOCK_WIDTH = 10;
+
+const auto INDENT = 3;
+
 
 void svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -25,38 +38,57 @@ void svg_rect(double x, double y, double width, double height, string stroke = "
     cout << "<rect x='" << x << "' y='" << y << "' width='" << width <<"' height='" << height << "' stroke= '" << stroke << "' fill='" << color << "' />";
 }
 
-void
-show_histogram_svg(const vector<size_t>& bins, Input input) {
-    const auto IMAGE_WIDTH = 400;
-    const auto IMAGE_HEIGHT = 300;
-    const auto TEXT_LEFT = 20;
-    const auto TEXT_BASELINE = 20;
-    const auto TEXT_WIDTH = 50;
-    const auto BIN_HEIGHT = 30;
-    const auto BLOCK_WIDTH = 10;
+void get_version_info(DWORD &version_major, DWORD &version_minor, DWORD &build) {
+    DWORD vWIN = GetVersion();
 
+    DWORD mask = 0b00000000'00000000'11111111'11111111;
+    DWORD version = vWIN & mask;
+    DWORD platform = vWIN >> 16;
+
+    DWORD version_mask = 0b00000000'11111111;
+    version_major = version & version_mask;
+    version_minor = version >> 8;
+
+    if ((vWIN & 0x80000000) == 0) {
+        build = platform;
+    }
+}
+
+void show_histogram_svg(const vector <size_t> &bins, Input input){
     const auto MAX_ASTERISK = (IMAGE_WIDTH - TEXT_WIDTH)/10;
 
-    size_t max_bin = bins[0];
-    for (size_t bin : bins) {
-        if (max_bin < bin) {
-            max_bin = bin;
+    size_t max_bins = bins[0];
+    for (size_t bin : bins)
+    {
+        if (max_bins < bin)
+        {
+            max_bins = bin;
         }
     }
 
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
-    for (size_t bin : bins) {
-        double height = bin;
-        if (max_bin > MAX_ASTERISK) {
-            height = MAX_ASTERISK * (static_cast<double>(bin) / max_bin);
+    for (size_t i = 0; i < bins.size(); i++) {
+        size_t height = bins[i] * BLOCK_WIDTH;
+        if (max_bins * BLOCK_WIDTH > IMAGE_WIDTH - TEXT_WIDTH)
+        {
+            height = (IMAGE_WIDTH - TEXT_WIDTH) * (static_cast<double>(bins[i]) / max_bins);
         }
-        const double bin_width = BLOCK_WIDTH * height;
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin), input.decoration);
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", "aqua");
+        const double bin_width = height;
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]), input.decoration);
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "yellow", "cyan");
         top += BIN_HEIGHT;
     }
 
+    DWORD version_minor, version_major;
+    DWORD build; DWORD  bufCharCount = vWIN_BUFFER;
+    TCHAR  infoBuf[vWIN_BUFFER];
+    GetComputerName(infoBuf, &bufCharCount);
+    get_version_info(version_major, version_minor, build);
+
+    svg_text(TEXT_LEFT, top + 20, "Windows version " + to_string(version_major) + "." + to_string(version_minor) + ", build " + to_string(build));
+    svg_text(TEXT_LEFT, top + 40, "Computer name: ");
+    svg_text(TEXT_LEFT + 115, top + 40, infoBuf);
+
     svg_end();
 }
-

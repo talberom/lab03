@@ -3,13 +3,16 @@
 #include <sstream>
 #include <string>
 #include <istream>
-
 #include "svg.h"
 #include "histogram.h"
+#include <math.h>
+#include <windows.h>
+#include <tchar.h>
 
 #include <curl/curl.h>
 
 using namespace std;
+
 
 vector<double> input_numbers(istream& in, size_t count){
     vector<double> result(count);
@@ -20,7 +23,6 @@ vector<double> input_numbers(istream& in, size_t count){
 }
 
 Input read_input(istream& in, bool prompt){
-
     Input data;
     if (prompt){
         cerr << "Enter number count: ";
@@ -126,7 +128,7 @@ size_t write_data(void *items, size_t item_size, size_t item_count, void *ctx){
 
 Input download(const string &address){
     stringstream buffer;
-     CURL* curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
     if (curl) {
         CURLcode res;
         double namelookup;
@@ -147,9 +149,7 @@ Input download(const string &address){
 
 
 
-
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Input data;
     if (argc > 1){
         data = download(argv[1]);
@@ -160,6 +160,5 @@ int main(int argc, char* argv[])
 
     const auto bins = make_histogram(data);
     show_histogram_svg(bins, data);
-
     return 0;
 }

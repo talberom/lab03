@@ -1,4 +1,5 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1653748962 source:c:\users\user\desktop\labs\3\project\histogram.cpp
 	<vector>
 	"histogram.h"
@@ -32,4 +33,34 @@
 	"histogram.h"
 	"svg.h"
 	"test.h"
+=======
+1653912448 source:c:\users\user\desktop\labs\3\project\histogram.cpp
+	"histogram.h"
+
+1653912465 c:\users\user\desktop\labs\3\project\histogram.h
+	<vector>
+
+1653919831 source:c:\users\user\desktop\labs\3\project\main.cpp
+	<iostream>
+	<vector>
+	<math.h>
+	<windows.h>
+	<tchar.h>
+	"histogram.h"
+	"svg.h"
+
+1653912502 c:\users\user\desktop\labs\3\project\svg.h
+	<iostream>
+	<vector>
+
+1653913144 source:c:\users\user\desktop\labs\3\project\svg.cpp
+	"svg.h"
+
+1653912640 source:c:\users\user\desktop\labs\3\project\test.cpp
+	"test.h"
+	"histogram.h"
+
+1653912605 c:\users\user\desktop\labs\3\project\test.h
+	<cassert>
+>>>>>>> lab04-2
 

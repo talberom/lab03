@@ -1,8 +1,6 @@
-#include "histogram.h"
 #include "test.h"
-#include <cassert>
+#include "histogram.h"
 
-using namespace std;
 
 void test_positive(){
     double min = 0;
@@ -10,7 +8,6 @@ void test_positive(){
     find_minmax({1, 2, 3}, min, max);
     assert(min == 0);
     assert(max == 3);
-    // assert(max == 4);
 }
 
 void test_negative(){
@@ -44,15 +41,3 @@ void test_glass_array(){
     assert(min == 0);
     assert(max == 0);
 }
-/*
-int main(){
-
-    test_positive();
-    test_negative();
-    test_same();
-    test_one_num();
-    test_glass_array();
-
-    return 0;
-}
-*/
