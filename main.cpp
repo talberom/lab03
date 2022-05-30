@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
         data = download(argv[1]);
     }
     else {
-        data = read_input(cin, true);
+        data = read_input(cin, false);
     }
 
     const auto bins = make_histogram(data);

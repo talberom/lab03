@@ -18,7 +18,7 @@ void svg_end() {
 }
 
 void svg_text(double left, double baseline, string text, string decorate = "none"){
-    cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>";
+    cout << "<text x='" << left << "' y='" << baseline << "' text-decoration='" << decorate << "'>" << text << "</text>";
 }
 
 void svg_rect(double x, double y, double width, double height, string stroke = "black", string color = "cyan"){
