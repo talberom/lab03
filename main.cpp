@@ -75,36 +75,6 @@ void show_histogram_text(const vector<size_t>& bins){
 
 int main()
 {
-    DWORD vWIN = GetVersion();
-
-    printf("Windows version: %u\n", vWIN);
-    printf("Windows version: %08x\n", vWIN);
-
-    DWORD mask = 0b00000000'00000000'11111111'11111111;
-    DWORD version = vWIN & mask;
-    printf("Version: %08x\n", version);
-
-    DWORD platform = vWIN >> 16;
-    DWORD version_mask = 0b00000000'11111111;
-    DWORD version_major = version & version_mask;
-    DWORD version_minor = version >> 8;
-
-    DWORD build;
-    if ((vWIN & 0x80000000) == 0) {
-        build = platform;
-    }
-
-    printf("Windows v%u.%u (build %u)\n", version_major, version_minor, build);
-
-    TCHAR infoBuf[vWIN_BUFFER];
-    DWORD bufCharCount = vWIN_BUFFER;
-
-    if (!GetComputerName(infoBuf, &bufCharCount)){
-        printf("GetComputername");
-    }
-    printf("\nComputer name: %s\n", infoBuf);
-
-    return 0;
     size_t number_count;
     cerr << "enter number count: ";
     cin >> number_count;
